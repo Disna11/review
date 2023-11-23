@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Type your message Here</h2>
+            <form id="replayMessage" action="http://192.168.0.9/PHPREST/api/replyMessage.php" method="post">
+
+                <!-- input fields for getting data from the user -->
+                <!-- <label >Message:</label><br> -->
+                <input type="text" placeholder="enter your response" name="message" id="message" required>
+                <br><br>
+
+                <script>
+                    var user_id= localStorage.getItem("repuserid");
+                    var review_id= localStorage.getItem("repReviewid");
+                    
+       
+    
+                   
+                   document.getElementById("replayMessage").addEventListener("submit", function (event){
+                    event.preventDefault(); // Prevent form submission
+                        
+                 // Get form data
+                   const replayformData = new FormData(event.target);
+                        
+                     // Add the userid to the formData
+                 replayformData.append("user_id", user_id);
+                 replayformData.append("review_id",review_id);
+                 fetch("http://192.168.0.9/PHPREST/api/replyMessage.php", {
+                         method: "POST",
+                         body: replayformData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+              // Check if the update was successful
+                         if (data.error === false ) {
+                              const message = data.message;
+                              alert(message);
+                             window.location.href = "displayReviews.html";
+                         }else{
+            
+                            const message = data.message;
+                           alert(message);
+                         }
+                        })
+                              .catch(error => console.error("Error during updation:", error));
+                });
+            
+            
+                </script>
+
+                <!-- button for submitting the data -->
+               <button type="submit"> Send</button>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,60 @@
+/* Apply some basic styling to the table */
+*{
+    margin: 0%;
+    padding: 0%;
+}
+
+body{
+    background-image: url(register.jpg);
+    background-size: 100% 740px;
+    font-family: 'Mulish', sans-serif;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    justify-content: space-between;
+    padding: 20px;
+   
+    
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Style the header row */
+  thead tr {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style the "Actions" column with buttons */
+  td:last-child button {
+    margin-right: 5px;
+  }
+  
+  /* Style the "Like" and "Dislike" buttons */
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #4CAF50; /* Green color for "Like" button */
+    color: white;
+  }
+  
+  /* Style the "Dislike" button with a different background color */
+  td:nth-child(4) button {
+    background-color: #f44336; /* Red color for "Dislike" button */
+  }
+  
+  /* On hover, change the background color of the buttons */
+  button:hover {
+    background-color: #45a049; /* Darker green color on hover for "Like" button */
+  }
+  
+  /* On hover, change the background color of the "Dislike" button */
+  td:nth-child(4) button:hover {
+    background-color: #d32f2f; /* Darker red color on hover for "Dislike" button */
+  }
+  

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Register Here</h2>
+            <form id="register" action="http://192.168.0.9/PHPREST/api/register.php" method="post">
+
+                <!-- input fields for getting data from the user -->
+                <label >Full Name:</label><br>
+                <input type="text" placeholder="enter your full name" name="fullname" id="fullname" required>
+                <br><br>
+
+                <label >Email ID:</label><br>
+                <input type="text" placeholder="enter your email id" name="email" id="email" required>
+                <br><br>
+
+                <label >Phone Number:</label><br>
+                <input type="number" placeholder="enter your phone number" name="phonenumber" id="phonenumber" required>
+                <br><br>
+
+                <label >UserName:</label><br>
+                <input type="text" placeholder="enter your user name" name="username" id="username" required>
+                <br><br>
+
+                <label >Password:</label><br>
+                <input type="text" placeholder="enter your password" name="password" id="password" required>
+                <br><br>
+
+                <!-- button for submitting the data -->
+               <button type="submit"> Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("register").addEventListener("submit", function (event){
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const registerformData = new FormData(event.target);
+
+            // Make API call using fetch()
+            fetch("http://192.168.0.9/PHPREST/api/register.php", {
+                method: "POST",
+                body: registerformData
+            })
+
+            .then(response => response.json())
+            .then(data => {
+               
+                // Check if the login was successful
+                if (data.error === false ) {
+                    const message = data.message;
+                    alert(message);
+                    window.location.href = "login.html";
+                }
+                else {
+                    const message = data.message;
+                    alert(message);
+                }
+            })
+            .catch(error => console.error("Error during login:", error));
+        });
+
+    </script>
+</body>
+</html>

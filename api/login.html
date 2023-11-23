@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="loginContainer">
+        <div class="text">
+            <h1>LOGIN</h1>
+            <form id="login" action="http://192.168.0.9/PHPREST/api/login.php" method="post"> 
+                <!-- input field for username -->
+            <input class="input1" type="text" placeholder="enter UserName"  name="username" id="username" required> 
+            <!-- input field for password -->
+            <input class="input2" type="password" placeholder="enter Password" name="password" id="password" required><br>
+            <!-- button for submitting the form -->
+            <button type="submit">Login</button>
+            <p>Don't Have an Acoount yet??<span id="signup">Sign Up</span></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+//  navigate to register.html page when sign-up is clicked
+            document.getElementById("signup").addEventListener("click", function() {
+            window.location.href = "register.html";
+        });
+
+
+        document.getElementById("login").addEventListener("submit", function (event){
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const loginformData = new FormData(event.target);
+
+            // Make API call using fetch()
+            fetch("http://192.168.0.9/PHPREST/api/login.php", {
+                method: "POST",
+                body: loginformData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Check if the login was successful
+                if (data.error === false ) {
+                    // store the message from the server to a constant called "message" and alert it.
+                    const message = data.message;
+                    alert(message);
+                    // Data from the API response will be stored in data.data
+                    const userData = data.data;
+
+                    // get the data and store it in variables
+                    const id= userData.id;
+                    const full_name= userData.full_name;
+                    const email= userData.email;
+                    const phone_no= userData.phone_no;
+                    const username= userData.username;
+                    const password= userData.password;
+                    
+                    //store the data in localstorage for future usage
+
+                    localStorage.setItem("userid", id);
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("password", password);
+                    localStorage.setItem("globalUserName", username);
+                    localStorage.setItem("globalPassword", password);
+                    
+                    console.log(userData);
+                   // go to homepage.html after successful login
+                    window.location.href = "homepage.html"
+        
+                } else {
+                    const message = data.message;
+                    alert(message);
+                   
+                }
+            })
+            .catch(error => console.error("Error during login:", error));
+        });
+
+    </script>
+</body>
+</html>

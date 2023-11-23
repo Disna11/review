@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a review</title>
+    <link rel="stylesheet" href="register.css" >
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Write your Review Here</h2>
+            <form id="updateReview" action="http://192.168.0.9/PHPREST/api/updateReview.php" method="post">
+
+                <!-- input fields for getting data from the user -->
+                <label >Review:</label><br>
+                <input type="text" placeholder="write your review" name="update_review" id="update_review" required>
+                <br><br>
+
+                <script>
+                    var user_id= localStorage.getItem("userid");
+                    var review_id= localStorage.getItem("upReviewid");
+                    
+                    document.getElementById("updateReview").addEventListener("submit", function (event){
+                        event.preventDefault(); // Prevent form submission
+            
+                        // Get form data
+                        const updateformData = new FormData(event.target);
+            
+                         // Add the userid to the formData
+                         updateformData.append("user_id", user_id);
+                         updateformData.append("review_id",review_id);
+            
+                         fetch("http://192.168.0.9/PHPREST/api/updateReview.php", {
+                            method: "POST",
+                            body: updateformData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Check if the update was successful
+                            if (data.error === false ) {
+                                const message = data.message;
+                                alert(message);
+                                window.location.href = "displayReviews.html";
+                            }else{
+                                const message = data.message;
+                                alert(message);
+                            }
+                        })
+                        .catch(error => console.error("Error during updation:", error));
+                    });
+                    
+            
+                </script>
+
+                <!-- button for submitting the data -->
+               <button type="submit"> Update</button>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>

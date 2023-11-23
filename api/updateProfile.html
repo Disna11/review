@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update your Profile</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Update Here</h2>
+            <form id="updateProfile" action="http://192.168.0.9/PHPREST/api/update.php" method="post">
+
+                <!-- getting the data from the user for upadting the profile -->
+                <label >Full Name:</label><br>
+                <input type="text" placeholder="enter your full name" name="full_name" id="full_name" required>
+                <br><br>
+
+                <label >Phone Number:</label><br>
+                <input type="number" placeholder="enter your phone number" name="phone_no" id="phone_no" required>
+                <br><br>
+
+                <label >UserName:</label><br>
+                <input type="text" placeholder="enter your user name" name="user_name" id="user_name" required>
+                <br><br>
+
+                <label >Password:</label><br>
+                <input type="text" placeholder="enter your password" name="password" id="password" required>
+                <br><br>
+                <!-- button for submitting the collected data -->
+
+               <button type="submit"> Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var userid= localStorage.getItem("userid");
+
+        document.getElementById("updateProfile").addEventListener("submit", function (event){
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const updateformData = new FormData(event.target);
+
+             // Add the userid to the formData
+             updateformData.append("userid", userid);
+
+             fetch("http://192.168.0.9/PHPREST/api/update.php", {
+                method: "POST",
+                body: updateformData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Check if the update was successful
+                if (data.error === false ) {
+                    const message = data.message;
+                    alert(message);
+                    window.location.href = "homepage.html";
+                }else{
+                    const message = data.message;
+                    alert(message);
+                }
+            })
+            .catch(error => console.error("Error during updation:", error));
+        });
+        
+
+    </script>
+    
+</body>
+</html>

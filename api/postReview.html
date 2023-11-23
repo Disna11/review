@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a review</title>
+    <link rel="stylesheet" href="register.css" >
+</head>
+<body>
+    <div class="main">
+        <div class="register">
+            <h2>Write your Review Here</h2>
+            <form id="postReview" action="http://192.168.0.9/PHPREST/api/postReview.php" method="post">
+
+                <!-- input fields for getting data from the user -->
+                <label >Review:</label><br>
+                <input type="text" placeholder="write your review" name="review" id="review" required>
+                <br><br>
+
+                <!-- button for submitting the data -->
+               <button type="submit"> Post</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var userid= localStorage.getItem("userid");
+
+        document.getElementById("postReview").addEventListener("submit", function (event){
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            const postformData = new FormData(event.target);
+
+             // Add the userid to the formData
+             postformData.append("user_id", userid);
+
+             fetch("http://192.168.0.9/PHPREST/api/postReview.php", {
+                method: "POST",
+                body: postformData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Check if the update was successful
+                if (data.error === false ) {
+                    const message = data.message;
+                    alert(message);
+                    window.location.href = "homepage.html";
+                }else{
+                    const message = data.message;
+                    alert(message);
+                }
+            })
+            .catch(error => console.error("Error during updation:", error));
+        });
+        
+
+    </script>
+</body>
+</html>

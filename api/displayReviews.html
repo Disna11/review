@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<!-- <style>
+/* CSS styles for the table */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 3px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  color: black;
+  background-color: lightgoldenrodyellow;
+  border-bottom: 3px solid #0c0c0c;
+  border-right: 3px solid #0b0a0a;
+  border-left: 3px solid #0b0a0a;
+}
+
+th {
+  color: blue;
+  background-color: lightblue;
+  border-top: 3px solid #0b0a0a;
+}
+
+tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+button {
+  cursor: pointer;
+}
+</style> -->
+</head>
+<body>
+  <div id="reviewsContainer"></div>
+
+  <script>
+    // Function to fetch reviews data from the server-side API
+    function fetchReviewsData() {
+      const apiUrl = "http://192.168.0.9/PHPREST/api/getFullData.php"; // Replace with your API URL
+
+      fetch(apiUrl, { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+          displayReviews(data.data);
+        })
+        .catch(error => {
+          console.error("Error fetching reviews data:", error);
+        });
+    }
+
+    // Call the function to fetch reviews data on page load
+    fetchReviewsData();
+
+    function displayReviews(reviewsData) {
+      const reviewsContainer = document.getElementById("reviewsContainer");
+      const table = document.createElement("table");
+      table.className = "table table-bordered table-striped"; // Example Bootstrap classes
+
+
+      // Create table header
+      const tableHeader = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+      const headers = ["User ID", "Review", "Likes", "Dislikes", "Messages", "Actions"];
+
+      for (const header of headers) {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+      }
+
+      tableHeader.appendChild(headerRow);
+
+      // Create table body
+      const tableBody = document.createElement("tbody");
+
+      for (const review of reviewsData) {
+        const row = document.createElement("tr");
+        const keys = ["user_id", "review", "like", "dislike", "messages"];
+        
+        const actionsCell = document.createElement("td");
+
+        for (const key of keys) {
+          const td = document.createElement("td");
+          td.textContent = review[key];
+          row.appendChild(td);
+        }
+        
+        const likeButton = createButton("", () => handleLike(review.reviewid));
+        likeButton.className = "btn btn-primary btn-sm"; //  Bootstrap classes for like button
+        const likeElement = document.createElement("i");
+       likeElement.className = "fa fa-thumbs-up"; 
+        likeButton.appendChild(likeElement);
+
+        const dislikeButton = createButton("", () => handleDislike(review.reviewid));
+        dislikeButton.className = "btn btn-primary btn-sm";
+        const dislikeElement = document.createElement("i");
+       dislikeElement.className = "fa fa-thumbs-down";
+       dislikeButton.appendChild(dislikeElement);
+        
+        
+
+         
+        const updateButton = createButton("", () => handleUpdate(review.reviewid, review.user_id));
+        updateButton.className = "btn btn-primary btn-sm";
+        const updateElement = document.createElement("i");
+       updateElement.className = "fa fa-edit"; 
+       updateButton.appendChild(updateElement);
+
+
+        const deleteButton = createButton("", () => handleDelete(review.reviewid,review.user_id));
+        deleteButton.className = "btn btn-primary btn-sm";
+        const deleteElement = document.createElement("i");
+       deleteElement.className = "fa fa-trash"; 
+       deleteButton.appendChild(deleteElement);
+       
+       const replayButton = createButton("", () => handleReplay(review.reviewid,review.user_id));
+        replayButton.className = "btn btn-primary btn-sm";
+        const replayElement = document.createElement("i");
+        replayElement.className = "fa fa-envelope";
+        replayButton.appendChild(replayElement);
+
+        actionsCell.appendChild(likeButton);
+        actionsCell.appendChild(dislikeButton);
+        actionsCell.appendChild(updateButton);
+        actionsCell.appendChild(deleteButton);
+        actionsCell.appendChild(replayButton);
+        
+
+        row.appendChild(actionsCell);
+        tableBody.appendChild(row);
+      }
+
+      table.appendChild(tableHeader);
+      table.appendChild(tableBody);
+      reviewsContainer.appendChild(table);
+    }
+
+    function createButton(label, onClick) {
+      const button = document.createElement("button");
+      button.textContent = label;
+      button.addEventListener("click", onClick);
+      return button;
+    }
+
+    // Define the click handlers for buttons
+    function handleLike(reviewId) {
+        const review_id= reviewId;
+      
+        const apiUrl = `http://192.168.0.9/PHPREST/api/likeReview.php?review_id=${review_id}`;
+         
+
+        fetch(apiUrl, {
+        method: "POST",
+        })
+        .then(response => response.json())
+        .then(data => {
+         
+        // Check if the API response indicates success
+        if (data.error) {
+            // Update the "Likes" cell with the new like count
+            
+            alert( data.message);
+            
+        } else {
+          alert( data.message);
+          window.location.href = "displayReviews.html"
+        }
+        })
+        .catch(error => {
+        console.error("Error during like update:", error);
+        });
+            console.log("Like button clicked for review ID:", reviewId);
+    }
+
+    function handleDislike(reviewId) {
+      const review_id= reviewId;
+      const apiUrl = `http://192.168.0.9/PHPREST/api/dislikeReview.php?review_id=${review_id}`;
+      fetch(apiUrl, {
+        method: "POST",
+        })
+        .then(response => response.json())
+        .then(data => {
+         
+        // Check if the API response indicates success
+        if (data.error) {
+            // Update the "Likes" cell with the new like count
+            
+            alert( data.message);
+            
+        } else {
+          alert( data.message);
+          window.location.href = "displayReviews.html";
+        }
+        })
+        .catch(error => {
+        console.error("Error during like update:", error);
+        });
+      console.log("Dislike button clicked for review ID:", reviewId);
+    }
+
+    function handleUpdate(reviewId, user_id) {
+      localStorage.setItem("upReviewid", reviewId);
+      const userid=localStorage.getItem('userid');
+
+      if(userid == user_id ){
+        window.location.href = "updateReview.html"
+      }else{
+        alert("Only author can update");
+      }
+
+      console.log("Update button clicked for review ID:", reviewId);
+    }
+
+    function handleDelete(reviewId, user_id) {
+      const userid=localStorage.getItem('userid');
+      
+       if(userid == user_id ){
+        const review_id= reviewId;
+        //const user_id= user_id;
+        const apiUrl = `http://192.168.0.9/PHPREST/api/deleteReview.php?review_id=${review_id}&user_id=${userid}`;
+        fetch(apiUrl, {
+        method: "POST",
+        })
+        .then(response => response.json())
+        .then(data => {
+          
+        // Check if the API response indicates success
+        if (data.error) {
+            // Update the "Likes" cell with the new like count
+            
+            alert( data.message);
+            
+        } else {
+          alert( data.message);
+            window.location.href = "displayReviews.html"
+        }
+        })
+        .catch(error => {
+        console.error("Error deleting review:", error);
+        });
+      console.log("Delete button clicked for review ID:", reviewId);
+      
+
+       }else{
+        console.log("Only authers can delete the review");
+       }
+    }
+
+    function handleReplay(reviewId,user_id) {
+      localStorage.setItem("repReviewid", reviewId);
+      localStorage.setItem("repuserid", user_id);
+      console.log("replyuser"+user_id);
+      const username=localStorage.getItem('globalUserName');
+      const password=localStorage.getItem('globalPassword');
+
+      if(username=="admin" && password=="admin"){
+        window.location.href = "replymessage.html"
+      }else{
+        alert("Only admin  can send replay");
+      }
+    }
+  </script>
+</body>
+</html>

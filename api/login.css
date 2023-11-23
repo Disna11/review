@@ -1,0 +1,68 @@
+
+*{
+    margin: 0%;
+    padding: 0%;
+}
+body{
+    background-image: url(travel.jpg);
+    background-size: 100% 740px;
+    font-family: 'Mulish', sans-serif;
+}
+.loginContainer{
+    width: 300px;
+    height: 350px;
+    background-color: #2f53c7;
+    margin-left: 40%;
+    margin-top: 13%;
+    text-align: center;
+    color:white;
+}
+.loginContainer .text{
+    position: relative;
+    top: 7%;
+}
+::placeholder{
+    color: black;
+}
+.input1{
+    border: none;
+    background-color:#2f53c7;
+    border-bottom: 3px solid black;
+    width: 250px;
+    font-size: 16px;
+    margin-top: 25px;
+    outline: none;
+    color: white;
+}
+.input2{
+    border: none;
+    background-color:#2f53c7;
+    border-bottom: 3px solid black;
+    width: 250px;
+    font-size: 16px;
+    margin-top: 25px;
+    outline: none;
+    color: white;
+}
+.text button{
+    width: 250px;
+    height: 44px;
+    background-color: wheat ;
+    margin-top: 30px;
+    border: none;
+    font-size: 20px ;
+    border-radius: 20px;
+}
+button:hover{
+    border: 3px solid wheat;
+    color: white;
+    background-color: black;
+}
+p{
+    margin-top: 30px;
+    font-size: 16px;
+}
+p span{
+    color: aqua;
+    cursor: pointer;
+}
