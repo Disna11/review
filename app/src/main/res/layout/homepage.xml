@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homepage">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/temp4">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/update"
+            android:layout_height="75dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/border"
+            android:text="UPDATE PROFILE"
+            android:paddingTop="10dp"
+            android:paddingBottom="13dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#000000"
+           />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/all_reviews"
+            android:layout_height="75dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/border"
+            android:text=" REVIEWS"
+            android:paddingTop="10dp"
+            android:paddingBottom="13dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/post"
+            android:layout_height="75dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/border"
+            android:text="POST REVIEWS"
+            android:paddingTop="10dp"
+            android:paddingBottom="13dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            />
+
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/border"
+            android:text="LOGOUT"
+            android:paddingTop="10dp"
+            android:paddingBottom="13dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

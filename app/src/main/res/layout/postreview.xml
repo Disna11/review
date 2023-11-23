@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostReview"
+    android:background="@drawable/temp4">
+
+    <TextView
+        android:id="@+id/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="17dp"
+        android:paddingLeft="30dp"
+        android:text="WRITE YOUR REVIEW HERE"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        />
+
+    <EditText
+        android:id="@+id/post_review"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/sign_in"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/border"
+        android:hint="Enter your review here"
+        android:maxLines="10"
+        android:paddingLeft="70dp"
+        android:paddingTop="5dp"
+        android:paddingRight="70dp"
+        android:paddingBottom="10dp"
+        android:scrollbars="vertical"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        />
+
+    <Button
+            android:id="@+id/postButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:text="Post review"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentBottom="true"/>
+
+
+
+
+</RelativeLayout>
